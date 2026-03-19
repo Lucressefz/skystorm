@@ -14,7 +14,7 @@ class PostController extends Controller
     {
         $posts = Post::all();
         return view ('posts.index',
-            ['posts'=> Post:: where ('user_id', auth()->user()->id)->get(),]);
+            ['posts'=> auth()->user()->posts()]);
     }
 
     /**

@@ -1,4 +1,4 @@
-<p align="center"><img src="/Users/zeufacklucressefortune/PhpstormProjects/front/skystorm/resources/images/skystorm.jpg" width="200" alt="SkyStorm Logo"></p>
+<p align="center"><img src="https://github.com/Lucressefz/skystorm/blob/master/resources/images/skystorm.jpg" width="200" alt="SkyStorm Logo"></p>
 
 # SkyStorm
 
