@@ -1,36 +1,29 @@
 @extends('layouts.app')
 
+{{-- Liste des posts de l'utilisateur connecté, avec possibilité de les supprimer --}}
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                @foreach($posts as $post)
-                <div class="card">
-                    <div class="card-header">{{ __('Mes posts') }}</div>
+    <h4 class="mb-4 fw-bold">Mes posts</h4>
 
-                    <div class="card-body">
-                        {{ $post->content }}
-                    </div>
-                </div>
-                @endforeach
+    @forelse ($posts as $post)
+        <div class="card mb-3 shadow-sm">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="fw-bold"><i class="bi bi-person-circle"></i> {{ auth()->user()->name }}</span>
+                <small class="text-muted">{{ $post->created_at->diffForHumans() }}</small>
+            </div>
+            <div class="card-body">
+                <p class="card-text mb-0">{{ $post->content }}</p>
+            </div>
+            <div class="card-footer text-end">
+                <form action="{{ route('posts.destroy', $post->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-sm btn-outline-danger">
+                        <i class="bi bi-trash"></i> Supprimer
+                    </button>
+                </form>
             </div>
         </div>
-    </div>
+    @empty
+        <p class="alert alert-info">Aucun post pour l'instant.</p>
+    @endforelse
 @endsection
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Document</title>
-</head>
-<body>
-
-@foreach($posts as $post)
-<p style = "border:1px solid black; max-width:500px;" > {{$post-> content }}</p>
-@endforeach
-</body>
-</html>
-

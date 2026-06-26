@@ -11,7 +11,7 @@
                         <form action="{{ route('notes.store') }}" method="POST">
                             @csrf
                             <textarea name="content" style="width: 100%"></textarea><br>
-                            <button style="width : 100px" type="submit"> GO mon gars!</button>
+                            <button style="width : 100px" type="submit"> Enregistrer </button>
                         </form>
                     </div>
                 </div>

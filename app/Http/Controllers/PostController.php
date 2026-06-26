@@ -12,9 +12,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
-        return view ('posts.index',
-            ['posts'=> auth()->user()->posts()]);
+        return view('posts.index', [
+            'posts' => Post::where('user_id', auth()->user()->id)
+                ->latest('created_at')
+                ->get()]);
     }
 
     /**
@@ -36,6 +37,29 @@ class PostController extends Controller
         $post->save();
         return redirect() -> route('posts.index');
     }
+
+    public function feed()
+    {
+        $followingIds = auth()->user()->followings()->pluck('users.id');
+
+        $posts = Post::whereIn('user_id', $followingIds)
+            ->with('user', 'likes')
+            ->latest('created_at')
+            ->get();
+
+        return view('posts.feed', compact('posts'));
+    }
+
+    public function home()
+    {
+        $posts = Post::with('user', 'likes')
+            ->latest('created_at')
+            ->get();
+
+        return view('posts.home', compact('posts'));
+    }
+
+
 
     /**
      * Display the specified resource.
@@ -66,6 +90,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post -> delete();
+        return back();
     }
 }

@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use Illuminate\Http\Request;
+
+class FollowController extends Controller
+{
+    public function follow(Request $request)
+    {
+        $data = $request->validate([
+            'following_id' => 'required|integer|exists:users,id',
+        ]);
+
+        auth()->user()->followings()->attach($data['following_id']);
+
+        return back();
+    }
+    public function unfollow(Request $request)
+    {
+        $data = $request->validate([
+            'following_id' => 'required|integer|exists:users,id',
+        ]);
+
+        auth()->user()->followings()->detach($data['following_id']);
+
+        return back();
+    }
+
+}

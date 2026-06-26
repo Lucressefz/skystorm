@@ -1,23 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">{{ __('Nouveau post') }}</div>
+    <h4 class="mb-4 fw-bold">Nouveau post</h4>
 
-                    <div class="card-body">
-                        <form action="{{ route('posts.store') }}" method="POST">
-                            @csrf
-                            <textarea name="content" style="width: 100%"></textarea><br>
-                            <button style="width : 100px" type="submit"> GO mon gars!</button>
-                        </form>
-
-                    </div>
-                </div>
-            </div>
+    <div class="card shadow-sm">
+        <div class="card-header fw-bold">
+            <i class="bi bi-pen"></i> {{ __('Nouveau post') }}
+        </div>
+        <div class="card-body">
+            <form action="{{ route('posts.store') }}" method="POST">
+                @csrf
+                <textarea name="content" class="form-control mb-2" rows="4" placeholder="Quoi de neuf ?"></textarea>
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-send"></i> Tweeter
+                </button>
+            </form>
         </div>
     </div>
 @endsection
-

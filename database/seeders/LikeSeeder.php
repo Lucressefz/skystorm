@@ -2,12 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\Note;
+use App\Models\Like;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class NoteSeeder extends Seeder
+class LikeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,11 +16,11 @@ class NoteSeeder extends Seeder
     public function run(): void
     {
         User::all()->each(function ($user) {
-            Note::factory()
-                ->count(5)
-                ->create([
+            Post::inRandomOrder()->take(4)->get()
+                ->each(fn($post) => Like::firstOrCreate([
                     'user_id' => $user->id,
-                ]);
+                    'post_id' => $post->id,
+                ]));
         });
     }
 }
